@@ -3,6 +3,8 @@ namespace Application\Controller;
 use Zend\Mvc\Controller\AbstractRestfulController;
 use Zend\View\Model\JsonModel;
 
+use Application\Model\Entity\Product;
+
 class ProductController extends AbstractRestfulController {
 
     private $db;
@@ -17,7 +19,13 @@ class ProductController extends AbstractRestfulController {
         return new JsonModel($myProducts);
     }
 
-    public function get($id) {}
+    public function get($id) {
+
+        $product = new Product(['id' => $id]);
+        $myProduct = $this->getDb()->fetch($product);
+
+        return new JsonModel($myProduct->getArrayCopy());
+    }
 
     public function create($data) {}
 
