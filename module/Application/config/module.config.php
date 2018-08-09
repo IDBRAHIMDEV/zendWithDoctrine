@@ -52,6 +52,32 @@ return array(
                     ),
                 ),
             ),
+            'product' => array(
+                'type'    => 'Literal',
+                'options' => array(
+                    'route'    => '/product',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Application\Controller',
+                        'controller'    => 'Product',
+                    ),
+                ),
+                'may_terminate' => true,
+                'child_routes' => array(
+                    'default' => array(
+                        'type'    => 'Segment',
+                        'options' => array(
+                            'route'    => '/[:id][/]',
+                            'constraints' => array(
+                                'id' => '[0-9]+',
+                            ),
+                            'defaults' => array(
+                                "controller" => 'Product',
+                                "action" => null
+                            ),
+                        ),
+                    ),
+                ),
+            ),
         ),
     ),
     'service_manager' => array(
@@ -75,7 +101,8 @@ return array(
     ),
     'controllers' => array(
         'invokables' => array(
-            'Application\Controller\Index' => Controller\IndexController::class
+            'Application\Controller\Index' => Controller\IndexController::class,
+            'Application\Controller\Product' => Controller\ProductController::class
         ),
     ),
     'view_manager' => array(
@@ -93,6 +120,9 @@ return array(
         'template_path_stack' => array(
             __DIR__ . '/../view',
         ),
+        'strategies' => [
+            'ViewJsonStrategy'
+        ]
     ),
     // Placeholder for console routes
     'console' => array(

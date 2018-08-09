@@ -15,6 +15,7 @@ class Db
         $entities = $repository->findAll();
         return $entities;
     }
+
     public function fetch($entity)
     {
         if (!$entity->getId()) {
@@ -23,11 +24,13 @@ class Db
         $entity = $this->entityManager->find(get_class($entity), $entity->getId());
         return $entity;
     }
+    
     public function delete($entity)
     {
         $this->entityManager->remove($entity);
         $this->entityManager->flush();
     }
+
     public function save($entity, $last = true)
     {
         $this->entityManager->persist($entity);
