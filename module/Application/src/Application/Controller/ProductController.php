@@ -27,7 +27,11 @@ class ProductController extends AbstractRestfulController {
         return new JsonModel($myProduct->getArrayCopy());
     }
 
-    public function create($data) {}
+    public function create($data) {
+        $product = new Product($data);
+        $this->getDb()->save($product);
+        return new JsonModel($product->getArrayCopy());
+    }
 
     public function update($id, $data) {}
 
